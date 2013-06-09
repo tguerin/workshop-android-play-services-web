@@ -11,10 +11,11 @@ USE `google_play_services` ;
 DROP TABLE IF EXISTS `google_play_services`.`User` ;
 
 CREATE  TABLE IF NOT EXISTS `google_play_services`.`User` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `firstName` VARCHAR(45) NULL ,
   `lastName` VARCHAR(45) NULL ,
   `email` VARCHAR(45) NULL ,
+  `creationDate` DATETIME NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
@@ -25,14 +26,14 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `google_play_services`.`Location` ;
 
 CREATE  TABLE IF NOT EXISTS `google_play_services`.`Location` (
-  `id` INT NOT NULL ,
-  `longitude` POINT NOT NULL ,
-  `latitude` POINT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `longitude` DECIMAL(10,6) NOT NULL ,
+  `latitude` DECIMAL(10,6) NOT NULL ,
   `accuracy` INT NULL ,
   PRIMARY KEY (`id`) ,
-  SPATIAL INDEX `LONG` (`longitude` ASC) ,
-  SPATIAL INDEX `LAT` (`latitude` ASC) )
-ENGINE = MyISAM;
+  INDEX `LONG` (`longitude` ASC) ,
+  INDEX `LAT` (`latitude` ASC) )
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -41,11 +42,14 @@ ENGINE = MyISAM;
 DROP TABLE IF EXISTS `google_play_services`.`Event` ;
 
 CREATE  TABLE IF NOT EXISTS `google_play_services`.`Event` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `Location_id` INT NOT NULL ,
   `name` VARCHAR(45) NOT NULL ,
   `description` VARCHAR(300) NULL ,
-  PRIMARY KEY (`id`, `Location_id`) ,
+  `creationDate` DATETIME NOT NULL ,
+  `startDate` DATETIME NOT NULL ,
+  `endDate` DATETIME NOT NULL ,
+  PRIMARY KEY (`id`) ,
   INDEX `fk_Event_Location1` (`Location_id` ASC) ,
   CONSTRAINT `fk_Event_Location1`
     FOREIGN KEY (`Location_id` )
@@ -84,12 +88,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `google_play_services`.`Device` ;
 
 CREATE  TABLE IF NOT EXISTS `google_play_services`.`Device` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `User_id` INT NOT NULL ,
   `Location_id` INT NOT NULL ,
   `deviceId` VARCHAR(45) NULL ,
   `registrationId` VARCHAR(45) NULL ,
-  PRIMARY KEY (`id`, `User_id`, `Location_id`) ,
+  PRIMARY KEY (`id`) ,
   INDEX `fk_Device_User1` (`User_id` ASC) ,
   INDEX `fk_Device_Location1` (`Location_id` ASC) ,
   CONSTRAINT `fk_Device_User1`

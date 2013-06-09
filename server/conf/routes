@@ -7,3 +7,20 @@ GET     /                           controllers.Application.index()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+
+POST     /event/create             @controllers.EventRS.create()
+PUT      /event/update             @controllers.EventRS.update()
+GET      /event/getById            @controllers.EventRS.getById()
+DELETE   /event/delete             @controllers.EventRS.delete()
+
+POST     /user/create             @controllers.UserRS.create()
+PUT      /user/update             @controllers.UserRS.update()
+GET      /user/getById            @controllers.UserRS.getById()
+DELETE   /user/delete             @controllers.UserRS.delete()
+
+POST     /device/create             @controllers.DeviceRS.create()
+PUT      /device/update             @controllers.DeviceRS.update()
+GET      /device/getById            @controllers.DeviceRS.getById()
+DELETE   /device/delete             @controllers.DeviceRS.delete()
+
