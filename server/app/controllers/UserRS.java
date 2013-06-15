@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import org.codehaus.jackson.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -55,4 +57,14 @@ public class UserRS extends Controller {
 
     }
 
+    public Result findUsersPresentAtAnEvent() {
+        JsonNode request = request().body().asJson();
+        if (request == null) {
+            return badRequest("Expecting Json data");
+        }
+
+        List<UserDB> users = userService.findUsersPresentAtAnEvent(request.findPath("id").getIntValue());
+        return ok(Json.toJson(UserConverter.convertToDtoList(users)));
+
+    }
 }
