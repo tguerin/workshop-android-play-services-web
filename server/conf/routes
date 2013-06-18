@@ -13,6 +13,8 @@ POST     /event/create             			@controllers.EventRS.create()
 PUT      /event/update             			@controllers.EventRS.update()
 GET      /event/getById            			@controllers.EventRS.getById()
 DELETE   /event/delete             			@controllers.EventRS.delete()
+GET      /event/subscribe             		@controllers.EventRS.subscribe()
+GET      /event/unsubscribe             	@controllers.EventRS.unsubscribe()
 
 POST     /user/create             			@controllers.UserRS.create()
 PUT      /user/update             			@controllers.UserRS.update()

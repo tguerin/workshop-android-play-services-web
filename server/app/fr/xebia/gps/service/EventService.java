@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import play.db.jpa.JPA;
 import fr.xebia.gps.db.entity.EventDB;
+import fr.xebia.gps.db.entity.UserDB;
 
 @Service
 public class EventService {
@@ -49,6 +50,32 @@ public class EventService {
 
     public EventDB getById(Integer id) {
         return JPA.em().getReference(EventDB.class, id);
+    }
+
+    public void subscribe(Integer eventId, Integer userId) {
+        EventDB event = JPA.em().getReference(EventDB.class, eventId);
+        if (event == null) {
+            return;
+        }
+
+        UserDB user = JPA.em().getReference(UserDB.class, eventId);
+        if (user == null) {
+            return;
+        }
+        user.getEvents().add(event);
+    }
+
+    public void unsubscribe(Integer eventId, Integer userId) {
+        EventDB event = JPA.em().getReference(EventDB.class, eventId);
+        if (event == null) {
+            return;
+        }
+
+        UserDB user = JPA.em().getReference(UserDB.class, eventId);
+        if (user == null) {
+            return;
+        }
+        user.getEvents().remove(event);
     }
 
 }

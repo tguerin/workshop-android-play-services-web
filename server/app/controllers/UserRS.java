@@ -1,12 +1,15 @@
 package controllers;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.codehaus.jackson.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.F.Function;
+import play.libs.F.Promise;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -63,8 +66,20 @@ public class UserRS extends Controller {
             return badRequest("Expecting Json data");
         }
 
-        List<UserDB> users = userService.findUsersPresentAtAnEvent(request.findPath("id").getIntValue());
-        return ok(Json.toJson(UserConverter.convertToDtoList(users)));
+        final List<UserDB> users = userService.findUsersPresentAtAnEvent(request.findPath("id").getIntValue());
+
+        // Ne sert a rien => exemple de promise play java
+        Promise<JsonNode> promise = play.libs.Akka.future(new Callable<JsonNode>() {
+            public JsonNode call() {
+                return Json.toJson(UserConverter.convertToDtoList(users));
+            }
+        });
+
+        return async(promise.map(new Function<JsonNode, Result>() {
+            public Result apply(JsonNode json) {
+                return ok(json);
+            }
+        }));
 
     }
 }

@@ -55,4 +55,26 @@ public class EventRS extends Controller {
 
     }
 
+    public Result subscribe() {
+        JsonNode request = request().body().asJson();
+        if (request == null) {
+            return badRequest("Expecting Json data");
+        }
+        Integer eventId = request.findPath("eventId").getIntValue();
+        Integer userId = request.findPath("userId").getIntValue();
+        eventService.subscribe(eventId, userId);
+        return ok();
+    }
+
+    public Result unsubscribe() {
+        JsonNode request = request().body().asJson();
+        if (request == null) {
+            return badRequest("Expecting Json data");
+        }
+        Integer eventId = request.findPath("eventId").getIntValue();
+        Integer userId = request.findPath("userId").getIntValue();
+        eventService.unsubscribe(eventId, userId);
+        return ok();
+    }
+
 }
