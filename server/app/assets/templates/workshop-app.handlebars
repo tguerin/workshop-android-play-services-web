@@ -11,12 +11,12 @@
 				<div class="control-group">
 					<label class="control-label" for="message">Messsage</label>
 					<div class="controls">
-						<input type="text" class="input-large" placeholder="Tapez votre message...">
+						{{view Ember.TextField valueBinding="message" placeholder="Tapez votre message..."}}
 					</div>
 				</div>
 				<div class="form-actions" style="padding-left:40%;">
-					<button id="send" class="btn btn-primary">Envoyer</button>
-					<button id="cancel" class="btn">Annuler</button>
+					<button id="send" class="btn btn-primary" {{action broadcastMessage}}>Envoyer</button>
+					<button id="cancel" class="btn" {{action cancelMessage}}>Annuler</button>
 				</div>
 			</fieldset>
 		</div>

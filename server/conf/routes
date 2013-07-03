@@ -27,5 +27,7 @@ PUT      /device/update             		@controllers.DeviceRS.update()
 GET      /device/getById           			@controllers.DeviceRS.getById()
 DELETE   /device/delete            			@controllers.DeviceRS.delete()
 
-GET     /push/connect						controllers.Push.connect()
+GET     /push/connect						@controllers.Push.connect()
+POST    /push/notifyLocation				@controllers.Push.notifyLocation()
+POST 	/push/broadcastMessage				@controllers.Push.broadcastMessage()
 

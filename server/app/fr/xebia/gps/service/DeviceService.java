@@ -1,5 +1,7 @@
 package fr.xebia.gps.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +76,18 @@ public class DeviceService {
 
     public DeviceDB getById(Integer id) {
         return JPA.em().getReference(DeviceDB.class, id);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<DeviceDB> findAll() {
+        StringBuilder query = new StringBuilder();
+        query.append("select d from DeviceDB d");
+        return JPA.em().createQuery(query.toString()).getResultList();
+    }
+
+    public void updateGcmId(Integer deviceId, String canonicalRegId) {
+        DeviceDB device = getById(deviceId);
+        device.setRegistrationId(canonicalRegId);
     }
 
 }
